@@ -16,11 +16,12 @@ const isMediumDevice = `mx-auto mt-0 mb-4 flex w-5/6 items-center
 const NavBar: React.FC = (props: Props) => {
   const [matches, setMatches] = useState<boolean>(false);
   const [active, setActive] = useState(false);
+  const [active2, setActive2] = useState(false);
 
   //  MENU ITEM
   const menuItem = [
     "Graphics & Design",
-    " Digital Marketing",
+    "Digital Marketing",
     "Writing & Translation",
     "Video & Animation",
     "Photography",
@@ -29,6 +30,7 @@ const NavBar: React.FC = (props: Props) => {
   ];
   const isActive = () => {
     window.scrollY > 10 ? setActive(true) : setActive(false);
+    window.scrollY > 100 ? setActive2(true) : setActive2(false);
   };
 
   useEffect(() => {
@@ -51,13 +53,12 @@ const NavBar: React.FC = (props: Props) => {
 
   const navStyle = matches ? isLargerDevice : isMediumDevice;
 
-  console.log("scroll", active);
   return (
     <>
       <nav
         className={
           active
-            ? " sticky top-0 bg-blue-dark transition duration-500 ease-in-out"
+            ? " sticky top-0 bg-blue-dark opacity-95 transition duration-500 ease-in-out"
             : ""
         }
       >
@@ -85,7 +86,7 @@ const NavBar: React.FC = (props: Props) => {
                 <button
                   className={
                     active
-                      ? `  bg-button-dark  text-white transition duration-300  ease-in-out hover:bg-blue-light hover:text-button-dark`
+                      ? ` bg-button-dark  text-white transition duration-300  ease-in-out hover:bg-blue-light hover:text-button-dark`
                       : `
               bg-blue-dark  transition  duration-500 ease-in-out hover:bg-blue-light  hover:text-[#2661b9] `
                   }
@@ -98,12 +99,18 @@ const NavBar: React.FC = (props: Props) => {
         </div>
 
         {/* Menu active on scroll */}
-        {active ? (
+        {active2 ? (
           <>
-            <hr className=" border-t-1  border-slate-300" />
-            <div className="mx-auto mt-2  flex w-5/6 cursor-pointer items-center justify-between text-sm text-[#62646a]  ">
+            <hr className=" border-t-1  border-slate-400" />
+            <div
+              className={
+                matches
+                  ? " mx-auto mt-2 flex  w-full cursor-pointer items-center justify-between  gap-4 px-3 text-xs  text-[#62646a]"
+                  : "mx-auto mt-2 flex w-5/6 cursor-pointer  items-center justify-between text-sm text-[#62646a]"
+              }
+            >
               {menuItem.map((item, index) => (
-                <div key={item + index} className="group mb-4 ">
+                <div key={item + index} className="group mb-4  ">
                   <span>
                     {item}
                     <div className="mx-auto h-1 w-3/4 transition duration-300 ease-out group-hover:bg-[#1dbf73]"></div>
