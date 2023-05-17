@@ -1,11 +1,11 @@
 import Hello from "@/components/Hello";
-import NavBar from "./components/NavBar";
+import NavBar from "@/components/NavBar";
 
 function App() {
   return (
     <>
       <NavBar />
-      {/* <div className="bg-red-500 mx-auto my-4 px-2 py-2">
+      {/* <div className="mx-auto my-4 bg-blue-500 px-2 py-2">
         Testing class sorting
       </div>
 
