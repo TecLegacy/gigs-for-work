@@ -4,20 +4,38 @@ type Props = {};
 // Styles
 const between = `flex items-center   `;
 const listEffect = "transition  duration-500 hover:text-orange-300";
-const isLargerDevice = ` bg-transparent mx-auto my-4 flex w-5/6 items-center
-justify-center rounded-[5px] px-8 py-4 shadow-nav
+const isLargerDevice = `mx-auto mb-4 flex w-5/6 items-center
+justify-center rounded-[5px] px-8 py-4 
 md:w-full md:text-sm
 sm:w-full sm:text-base sm:px-6 sm:py-3`;
-const isMediumDevice = `
-bg-transparent mx-auto my-4 flex w-5/6 items-center
- justify-center rounded-[5px]  px-8 py-4 shadow-nav  
+const isMediumDevice = `mx-auto mt-0 mb-4 flex w-5/6 items-center
+ justify-center rounded-[5px]  px-8 py-4  
 `;
 
 // NavBar Component
 const NavBar: React.FC = (props: Props) => {
   const [matches, setMatches] = useState<boolean>(false);
+  const [active, setActive] = useState(false);
+
+  //  MENU ITEM
+  const menuItem = [
+    "Graphics & Design",
+    " Digital Marketing",
+    "Writing & Translation",
+    "Video & Animation",
+    "Photography",
+    "Programming & Tech",
+    "AI Services",
+  ];
+  const isActive = () => {
+    window.scrollY > 10 ? setActive(true) : setActive(false);
+  };
 
   useEffect(() => {
+    // TOP SCROLL EFFECT
+    window.addEventListener("scroll", isActive);
+
+    // MEDIA QUERY
     const mediaQuery = window.matchMedia("(max-width: 768px)");
     setMatches(mediaQuery.matches);
 
@@ -27,14 +45,27 @@ const NavBar: React.FC = (props: Props) => {
     mediaQuery.addEventListener("change", handleMediaQueryChange);
     return () => {
       mediaQuery.removeEventListener("change", handleMediaQueryChange);
+      window.removeEventListener("scroll", isActive);
     };
   }, []);
 
   const navStyle = matches ? isLargerDevice : isMediumDevice;
+
+  console.log("scroll", active);
   return (
     <>
-      <nav>
-        <div className={navStyle}>
+      <nav
+        className={
+          active
+            ? " sticky top-0 bg-blue-dark transition duration-500 ease-in-out"
+            : ""
+        }
+      >
+        <div
+          className={`${navStyle} ${
+            active ? "" : "shadow-nav transition duration-500 ease-in-out"
+          }`}
+        >
           <div className={` ${between}justify-between  md:w-full `}>
             <div className="  ml-12 cursor-pointer text-2xl">
               <span>Hire</span>
@@ -52,8 +83,12 @@ const NavBar: React.FC = (props: Props) => {
                   Sign In{" "}
                 </button>
                 <button
-                  className="
-              bg-blue-dark  transition  duration-500 ease-in-out hover:bg-blue-light  hover:text-[#2661b9] "
+                  className={
+                    active
+                      ? `  bg-button-dark  text-white transition duration-300  ease-in-out hover:bg-blue-light hover:text-button-dark`
+                      : `
+              bg-blue-dark  transition  duration-500 ease-in-out hover:bg-blue-light  hover:text-[#2661b9] `
+                  }
                 >
                   Join In
                 </button>
@@ -61,52 +96,25 @@ const NavBar: React.FC = (props: Props) => {
             </div>
           </div>
         </div>
-        <hr className=" border-t-1  border-slate-300" />
-        <div className=" mx-auto mt-2  flex w-5/6 items-center justify-between text-[#62646a]">
-          <div className="group">
-            <span>
-              Graphics & Design
-              <div className="mx-auto h-1 w-3/4 transition duration-300 ease-out group-hover:bg-[#1dbf73]"></div>
-            </span>
-          </div>
-          <div className="group">
-            <span>
-              Digital Marketing
-              <div className="mx-auto h-1 w-3/4 transition duration-300 ease-out group-hover:bg-[#1dbf73]"></div>
-            </span>
-          </div>
-          <div className="group">
-            <span>
-              Writing & Translation
-              <div className="mx-auto h-1 w-3/4 transition duration-300 ease-out group-hover:bg-[#1dbf73]"></div>
-            </span>
-          </div>
-          <div className="group">
-            <span>
-              Video & Animation
-              <div className="mx-auto h-1 w-3/4 transition duration-300 ease-out group-hover:bg-[#1dbf73]"></div>
-            </span>
-          </div>
-          <div className="group">
-            <span>
-              Photography
-              <div className="mx-auto h-1 w-3/4 transition duration-300 ease-out group-hover:bg-[#1dbf73]"></div>
-            </span>
-          </div>
-          <div className="group">
-            <span>
-              Programming & Tech
-              <div className="mx-auto h-1 w-3/4 transition duration-300 ease-out group-hover:bg-[#1dbf73]"></div>
-            </span>
-          </div>
-          <div className="group">
-            <span>
-              AI Services
-              <div className="mx-auto h-1 w-3/4 transition duration-300 ease-out group-hover:bg-[#1dbf73]"></div>
-            </span>
-          </div>
-        </div>
-        {/* #62646a */}
+
+        {/* Menu active on scroll */}
+        {active ? (
+          <>
+            <hr className=" border-t-1  border-slate-300" />
+            <div className="mx-auto mt-2  flex w-5/6 cursor-pointer items-center justify-between text-sm text-[#62646a]  ">
+              {menuItem.map((item, index) => (
+                <div key={item + index} className="group mb-4 ">
+                  <span>
+                    {item}
+                    <div className="mx-auto h-1 w-3/4 transition duration-300 ease-out group-hover:bg-[#1dbf73]"></div>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          ""
+        )}
       </nav>
     </>
   );
