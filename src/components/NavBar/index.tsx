@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-type Props = {};
+import SignIn from "./SignIn";
+import Avatar from "./avatar/Avatar";
 
 // Styles
 const between = `flex items-center   `;
@@ -12,11 +13,27 @@ const isMediumDevice = `mx-auto mt-0 mb-4 flex w-5/6 items-center
  justify-center rounded-[5px]  px-8 py-4  
 `;
 
+type Props = {};
+
+// User Interface
+interface User {
+  id: number;
+  userName: string;
+  isSeller: boolean;
+}
+
 // NavBar Component
 const NavBar: React.FC = (props: Props) => {
   const [matches, setMatches] = useState<boolean>(false);
   const [active, setActive] = useState(false);
   const [active2, setActive2] = useState(false);
+
+  // user-data
+  const userData: User = {
+    id: 1,
+    userName: "John Doe",
+    isSeller: true,
+  };
 
   //  MENU ITEM
   const menuItem = [
@@ -30,7 +47,7 @@ const NavBar: React.FC = (props: Props) => {
   ];
   const isActive = () => {
     window.scrollY > 10 ? setActive(true) : setActive(false);
-    window.scrollY > 100 ? setActive2(true) : setActive2(false);
+    window.scrollY > 200 ? setActive2(true) : setActive2(false);
   };
 
   useEffect(() => {
@@ -58,7 +75,7 @@ const NavBar: React.FC = (props: Props) => {
       <nav
         className={
           active
-            ? " sticky top-0 bg-blue-dark opacity-95 transition duration-500 ease-in-out"
+            ? "  sticky top-0 bg-blue-dark opacity-95 transition duration-500 ease-in-out"
             : ""
         }
       >
@@ -73,27 +90,21 @@ const NavBar: React.FC = (props: Props) => {
               <span className=" text-2xl  text-[green] ">.</span>
               <span>🦆</span>
             </div>
+
             <div className=" mr-8 flex items-center ">
-              <ul className="   flex  cursor-pointer gap-8  ">
+              <ul className=" font-[600] text-md   flex  cursor-pointer gap-8 px-2 ">
                 <li className={listEffect}>Hire Business</li>
-                <li className={listEffect}>Sell with Us</li>
+                {!userData.isSeller && (
+                  <li className={listEffect}>Sell with Us</li>
+                )}
                 <li className={listEffect}>Explore</li>
               </ul>
-              <div className="ml-12">
-                <button className=" transition duration-200 ease-in-out">
-                  Sign In{" "}
-                </button>
-                <button
-                  className={
-                    active
-                      ? ` bg-button-dark  text-white transition duration-300  ease-in-out hover:bg-blue-light hover:text-button-dark`
-                      : `
-              bg-blue-dark  transition  duration-500 ease-in-out hover:bg-blue-light  hover:text-[#2661b9] `
-                  }
-                >
-                  Join In
-                </button>
-              </div>
+              {/*SignIn And LogIn Component */}
+              {userData.isSeller ? (
+                <Avatar isSeller={userData.isSeller} />
+              ) : (
+                <SignIn active={active} />
+              )}
             </div>
           </div>
         </div>
