@@ -1,28 +1,60 @@
-import NavBar from "@/components/NavBar";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import TestPath from "@/components/TestPath";
+import PageNotFound from "@/pages/PageNotFound";
+import RootComponent from "@/pages/RootComponent";
+import HomePage from "@/pages/HomePage";
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootComponent />,
+    errorElement: <PageNotFound />,
+
+    children: [
+      {
+        path: "/contact",
+        element: <TestPath />,
+      },
+      {
+        path: "/home",
+        element: <HomePage />,
+      },
+      {
+        path: "/gigs",
+        element: <TestPath />,
+      },
+      {
+        path: "/gig/:id",
+        element: <TestPath />,
+      },
+      {
+        path: "/messages",
+        element: <TestPath />,
+      },
+      {
+        path: "/messages/:id",
+        element: <TestPath />,
+      },
+      {
+        path: "/orders",
+        element: <TestPath />,
+      },
+      {
+        path: "/mygigs",
+        element: <TestPath />,
+      },
+      {
+        path: "/add",
+        element: <TestPath />,
+      },
+    ],
+  },
+]);
 
 function App() {
   return (
     <>
-      <NavBar />
-      {/* <div className=" avatar dropdown dropdown-hover text-white">
-        <div tabIndex={0} className="w-24 mask mask-squircle">
-          <img
-            alt={"userData.userName"}
-            src="https://ik.imagekit.io/hw4mk2vrzim/lamafiver/aiony-haust-3TLl_97HNJo-unsplash_GmNRzj8zj.jpg?updatedAt=1684833952532"
-          />
-        </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-        >
-          <li>
-            <a>Item 1</a>
-          </li>
-          <li>
-            <a>Item 2</a>
-          </li>
-        </ul>
-      </div> */}
+      <RouterProvider router={router} />
     </>
   );
 }

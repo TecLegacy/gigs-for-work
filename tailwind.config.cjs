@@ -19,6 +19,10 @@ module.exports = {
       },
       boxShadow: {
         nav: "16px 16px 28px #cae1e1, -14px -14px 20px #fcffff",
+        // home: `-15px -15px 20px #534e47,
+        // 15px 15px 20px #877e73 `,
+        home: `-18px 18px 22px #655c51,
+        18px -18px 22px #776c5f`,
       },
     },
   },
