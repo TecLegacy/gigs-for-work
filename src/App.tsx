@@ -3,6 +3,7 @@ import TestPath from "@/components/TestPath";
 import PageNotFound from "@/pages/PageNotFound";
 import RootComponent from "@/pages/RootComponent";
 import HomePage from "@/pages/HomePage";
+import Comb from "./components/TestPath/Comb";
 
 export const router = createBrowserRouter([
   {
@@ -37,7 +38,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/orders",
-        element: <TestPath />,
+        element: <Comb/>,
       },
       {
         path: "/mygigs",
